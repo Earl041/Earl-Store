@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input { margin: 5px; padding: 8px; width: 250px; }
+        button { padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<h2>Log Masuk Admin</h2>
+
+<input type="text" id="username" placeholder="Username"><br>
+<input type="password" id="password" placeholder="Password"><br>
+<button onclick="checkLogin()">Log Masuk</button>
+
+<div id="admin-dashboard" style="display: none; margin-top: 20px;">
+    <h3>Statistik Laman Web</h3>
+    <p><b>Jumlah Lawatan:</b> <span id="visit-count"></span></p>
+    <p><b>Pengguna Online:</b> <span id="online-users"></span></p>
+    <p><b>Peranti:</b> <span id="device-info"></span></p>
+</div>
+
+<script>
+    async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hash = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hash))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+    }
+
+    async function checkLogin() {
+        var user = document.getElementById("username").value;
+        var pass = document.getElementById("password").value;
+
+        // Username dan password yang disulitkan SHA-256
+        const correctUser = "Earl";
+        const correctPassHash = "b5ff0a23cb48750e29b4a48e1695c725ff4913f246d4c5c60b745f37d92fe9f0"; 
+
+        const enteredPassHash = await hashPassword(pass);
+
+        if (user === correctUser && enteredPassHash === correctPassHash) {
+            alert("Log masuk berjaya!");
+            document.getElementById("admin-dashboard").style.display = "block";
+
+            // Paparkan statistik
+            document.getElementById("visit-count").innerText = localStorage.getItem('visitCount') || 0;
+            let onlineUsers = sessionStorage.getItem('onlineUsers') || 0;
+            sessionStorage.setItem('onlineUsers', ++onlineUsers);
+            document.getElementById("online-users").innerText = onlineUsers;
+            document.getElementById("device-info").innerText = navigator.userAgent;
+
+        } else {
+            alert("Username atau password salah!");
+        }
+    }
+
+    // Kurangkan pengguna online apabila pengguna keluar
+    window.addEventListener("beforeunload", function() {
+        let onlineUsers = sessionStorage.getItem('onlineUsers') || 0;
+        if (onlineUsers > 0) {
+            sessionStorage.setItem('onlineUsers', --onlineUsers);
+        }
+    });
+</script>
+
+</body>
+</html>
