@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { text-align: center; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .stat { margin-bottom: 20px; }
+        .device-list { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<h2>Dashboard Admin</h2>
+<div class="container">
+    <div class="stat">
+        <p><b>Jumlah Pelawat:</b> <span id="visit-count">0</span></p>
+    </div>
+    <div class="stat">
+        <p><b>Pengguna Online:</b> <span id="online-users">0</span></p>
+    </div>
+    <div class="stat">
+        <p><b>Senarai Peranti:</b></p>
+        <div id="device-list" class="device-list"></div>
+    </div>
+</div>
+
+<script>
+    // Periksa jika admin tidak log masuk dan halang akses langsung
+    if (sessionStorage.getItem("adminLogin") !== "true") {
+        alert("Sila log masuk dahulu!");
+        window.location.href = "login.html";
+    }
+
+    // Paparkan jumlah pelawat dari localStorage
+    document.getElementById("visit-count").innerText = localStorage.getItem('visitCount') || 0;
+
+    // Kira pengguna online (guna sessionStorage)
+    let onlineUsers = sessionStorage.getItem('onlineUsers') || 0;
+    sessionStorage.setItem('onlineUsers', ++onlineUsers);
+    document.getElementById("online-users").innerText = onlineUsers;
+
+    // Simpan maklumat peranti dalam localStorage
+    let devices = JSON.parse(localStorage.getItem("deviceList")) || [];
+    let newDevice = {
+        device: navigator.userAgent,
+        timestamp: new Date().toLocaleString()
+    };
+    devices.push(newDevice);
+    localStorage.setItem("deviceList", JSON.stringify(devices));
+
+    // Paparkan maklumat peranti
+    let deviceList = document.getElementById("device-list");
+    devices.forEach(device => {
+        let item = document.createElement("p");
+        item.textContent = `${device.device} (Masa: ${device.timestamp})`;
+        deviceList.appendChild(item);
+    });
+
+    // Kurangkan pengguna online apabila pengguna keluar
+    window.addEventListener("beforeunload", function() {
+        let onlineUsers = sessionStorage.getItem('onlineUsers') || 0;
+        if (onlineUsers > 0) {
+            sessionStorage.setItem('onlineUsers', --onlineUsers);
+        }
+    });
+</script>
+
+</body>
+</html>
