@@ -6,24 +6,17 @@
     <title>Login</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        input { margin: 5px; padding: 8px; }
-        button { padding: 10px 20px; }
+        input { margin: 5px; padding: 8px; width: 250px; }
+        button { padding: 10px 20px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <h2>Log Masuk Admin</h2>
 
-<input type="text" id="username" placeholder="Username">
-<input type="password" id="password" placeholder="Password">
+<input type="text" id="username" placeholder="Username"><br>
+<input type="password" id="password" placeholder="Password"><br>
 <button onclick="checkLogin()">Log Masuk</button>
-
-<div id="admin-dashboard" style="display: none; margin-top: 20px;">
-    <h3>Statistik Laman Web</h3>
-    <p><b>Jumlah Lawatan:</b> <span id="visit-count"></span></p>
-    <p><b>Pengguna Online:</b> <span id="online-users"></span></p>
-    <p><b>Peranti:</b> <span id="device-info"></span></p>
-</div>
 
 <script>
     function checkLogin() {
@@ -33,32 +26,16 @@
         // Username dan password yang ditetapkan
         if (user === "Earl" && pass === "040906") {
             alert("Log masuk berjaya!");
-            document.getElementById("admin-dashboard").style.display = "block";
+            
+            // Simpan status log masuk dalam sesi
+            sessionStorage.setItem("adminLogin", "true");
 
-            // Ambil jumlah lawatan dari local storage
-            document.getElementById("visit-count").innerText = localStorage.getItem('visitCount') || 0;
-
-            // Kira pengguna online berdasarkan sesi yang masih aktif
-            let onlineUsers = sessionStorage.getItem('onlineUsers') || 0;
-            sessionStorage.setItem('onlineUsers', ++onlineUsers);
-            document.getElementById("online-users").innerText = onlineUsers;
-
-            // Dapatkan info peranti
-            let deviceInfo = navigator.userAgent;
-            document.getElementById("device-info").innerText = deviceInfo;
-
+            // Alih ke halaman admin
+            window.location.href = "admin.html";
         } else {
             alert("Username atau password salah!");
         }
     }
-
-    // Kurangkan jumlah pengguna online apabila pengguna keluar
-    window.addEventListener("beforeunload", function() {
-        let onlineUsers = sessionStorage.getItem('onlineUsers') || 0;
-        if (onlineUsers > 0) {
-            sessionStorage.setItem('onlineUsers', --onlineUsers);
-        }
-    });
 </script>
 
 </body>
