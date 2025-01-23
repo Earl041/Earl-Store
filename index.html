@@ -119,12 +119,24 @@
     </section>
 </main>
 <!-- music auto play -->
-<audio controls autoplay loop>
+<audio id="background-music" controls autoplay loop>
     <source src="https://files.catbox.moe/w9smph.mp3" type="audio/mp3">
-    </audio>
+</audio>
+
 <footer>
     <p>&copy; 2024 Earl Store. All rights reserved.</p>
-   <p><a href="https://www.tiktok.com/@earllyzer" target="_blank">©Earl 2024</a></p>
+    <p><a href="https://www.tiktok.com/@earllyzer" target="_blank">©Earl 2024</a></p>
 </footer>
+
+<script>
+    // Pastikan muzik dimainkan selepas interaksi pengguna
+    window.addEventListener('click', function() {
+        var audio = document.getElementById('background-music');
+        if (audio.paused) {
+            audio.play().catch(error => console.error("Autoplay tidak dibenarkan:", error));
+        }
+    });
+</script>
+
 </body>
 </html>
