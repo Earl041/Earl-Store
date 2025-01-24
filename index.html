@@ -119,15 +119,18 @@
     </section>
 </main>
 <!-- music auto play -->
-<div style="text-align: center; margin-top: 20px;">
-    <audio id="background-music" controls autoplay loop>
-        <source src="https://files.catbox.moe/cxttjc.mp3" type="audio/mp3">
-    </audio>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 50px;">
+    <div style="background: linear-gradient(135deg, #1e1e1e, #3a3a3a); padding: 20px; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
+        <h3 style="color: #ffffff; font-family: Arial, sans-serif; text-align: center;">🎵 Now Playing 🎵</h3>
+        <audio id="background-music" controls autoplay loop style="width: 100%; border-radius: 10px;">
+            <source src="https://files.catbox.moe/w9smph.mp3" type="audio/mp3">
+        </audio>
+    </div>
 </div>
 
-<footer style="text-align: center; margin-top: 20px;">
+<footer style="text-align: center; margin-top: 50px; padding: 20px; background: #1e1e1e; color: #ffffff; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -5px 15px rgba(0,0,0,0.3);">
     <p>&copy; 2024 Earl Store. All rights reserved.</p>
-    <p><a href="https://www.tiktok.com/@earllyzer" target="_blank">©Earl 2024</a></p>
+    <p><a href="https://www.tiktok.com/@earllyzer" target="_blank" style="color: #00acee; text-decoration: none; font-weight: bold;">©Earl 2024</a></p>
 </footer>
 
 <script>
