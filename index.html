@@ -120,8 +120,18 @@
 </main>
 <!-- music auto play -->
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 50px;">
-    <div style="background: linear-gradient(135deg, #1e1e1e, #3a3a3a); padding: 20px; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.3);">
-        <h3 style="color: #ffffff; font-family: Arial, sans-serif; text-align: center;">🎵 Now Playing 🎵</h3>
+    <div style="background: linear-gradient(135deg, #1e1e1e, #3a3a3a); padding: 30px; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.3); text-align: center; position: relative;">
+        
+        <!-- Bulatan berwarna-warni sebelah kiri -->
+        <div class="color-circle left"></div>
+
+        <!-- CD berputar -->
+        <div class="cd-rotate"></div>
+
+        <!-- Bulatan berwarna-warni sebelah kanan -->
+        <div class="color-circle right"></div>
+
+        <h3 style="color: #ffffff; font-family: Arial, sans-serif; margin-top: 20px;">🎵 Now Playing 🎵</h3>
         <audio id="background-music" controls autoplay loop style="width: 100%; border-radius: 10px;">
             <source src="https://files.catbox.moe/w9smph.mp3" type="audio/mp3">
         </audio>
@@ -142,6 +152,54 @@
         }
     });
 </script>
+
+<style>
+    /* Gaya untuk CD berputar */
+    .cd-rotate {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ccc 10%, #333 40%, #111 60%, #000 80%);
+        border: 6px solid #ffffff;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        animation: spin 5s linear infinite;
+    }
+
+    /* Animasi pusingan */
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Bulatan warna-warni */
+    .color-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: color-change 3s infinite alternate;
+    }
+
+    .left {
+        left: -50px;
+    }
+
+    .right {
+        right: -50px;
+    }
+
+    /* Animasi perubahan warna */
+    @keyframes color-change {
+        0% { background: red; }
+        25% { background: yellow; }
+        50% { background: green; }
+        75% { background: blue; }
+        100% { background: purple; }
+    }
+</style>
+    
 
 </body>
 </html>
