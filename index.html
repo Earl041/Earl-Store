@@ -112,72 +112,23 @@
                     <svg class="contact-icon" viewBox="0 0 24 24">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                     </svg>
-                    <span>Terengganu</span>
+                    <span>Terengganu,Dalam Hati u</span>
                 </a>
             </div>
         </div>
     </section>
 </main>
 <!-- music auto play -->
-<audio id="background-music" controls autoplay loop>
-    <source src="https://files.catbox.moe/w9smph.mp3" type="audio/mp3">
-</audio>
-
-<div class="stats-container">
-    <p>
-        <span class="status-icon"></span> 
-        <b>JUMLAH ONLINE:</b> <span id="online-users">0</span>
-    </p>
-
-    <p>
-        <span class="visitor-icon"></span> 
-        <b>JUMLAH PELAWAT:</b> <span id="total-visitors">0</span>
-    </p>
+<div style="text-align: center; margin-top: 20px;">
+    <audio id="background-music" controls autoplay loop>
+        <source src="https://files.catbox.moe/w9smph.mp3" type="audio/mp3">
+    </audio>
 </div>
 
-<footer>
+<footer style="text-align: center; margin-top: 20px;">
     <p>&copy; 2024 Earl Store. All rights reserved.</p>
     <p><a href="https://www.tiktok.com/@earllyzer" target="_blank">©Earl 2024</a></p>
 </footer>
-
-<style>
-    .stats-container {
-        text-align: center;
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .status-icon {
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background-color: green;
-        animation: blink-fast 1s infinite ease-in-out;
-    }
-
-    .visitor-icon {
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        animation: color-change-fast 0.5s infinite alternate;
-    }
-
-    @keyframes blink-fast {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.1; }
-    }
-
-    @keyframes color-change-fast {
-        0% { background-color: red; }
-        25% { background-color: yellow; }
-        50% { background-color: blue; }
-        75% { background-color: green; }
-        100% { background-color: purple; }
-    }
-</style>
 
 <script>
     // Pastikan muzik dimainkan selepas interaksi pengguna
@@ -185,37 +136,6 @@
         var audio = document.getElementById('background-music');
         if (audio.paused) {
             audio.play().catch(error => console.error("Autoplay tidak dibenarkan:", error));
-        }
-    });
-
-    // Kira jumlah pelawat (rekod sebenar dengan localStorage)
-    let visitCount = localStorage.getItem('visitCount') || 0;
-    if (!sessionStorage.getItem('visited')) {
-        visitCount++;
-        localStorage.setItem('visitCount', visitCount);
-        sessionStorage.setItem('visited', 'true');  // Elak kiraan berganda dalam sesi sama
-    }
-    document.getElementById('total-visitors').innerText = visitCount;
-
-    // Kira pengguna online (guna sessionStorage & localStorage)
-    function updateOnlineUsers(change) {
-        let onlineUsers = Number(localStorage.getItem('onlineUsers') || 0);
-        onlineUsers += change;
-        localStorage.setItem('onlineUsers', onlineUsers);
-        document.getElementById('online-users').innerText = onlineUsers;
-    }
-
-    // Tambah pengguna online bila halaman dibuka
-    if (!sessionStorage.getItem('activeSession')) {
-        sessionStorage.setItem('activeSession', 'true');
-        updateOnlineUsers(1);
-    }
-
-    // Kurangkan pengguna online bila halaman ditutup
-    window.addEventListener('beforeunload', function() {
-        if (sessionStorage.getItem('activeSession')) {
-            updateOnlineUsers(-1);
-            sessionStorage.removeItem('activeSession');
         }
     });
 </script>
