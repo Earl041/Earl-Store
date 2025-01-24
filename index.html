@@ -123,10 +123,43 @@
     <source src="https://files.catbox.moe/w9smph.mp3" type="audio/mp3">
 </audio>
 
+<p>
+    <span class="status-icon"></span> 
+    <b>JUMLAH ONLINE:</b> <span id="online-users">0</span>
+</p>
+
+<p>
+    <span class="calendar-icon">📅</span> 
+    <b>JUMLAH PELAWAT:</b> <span id="total-visitors">0</span>
+</p>
+
+<p><b>Peranti Anda:</b> <span id="device-info"></span></p>
+
 <footer>
     <p>&copy; 2024 Earl Store. All rights reserved.</p>
     <p><a href="https://www.tiktok.com/@earllyzer" target="_blank">©Earl 2024</a></p>
 </footer>
+
+<style>
+    .status-icon {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: green;
+        animation: blink 2s infinite ease-in-out;
+    }
+
+    .calendar-icon {
+        font-size: 16px;
+        animation: blink 2s infinite ease-in-out;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+</style>
 
 <script>
     // Pastikan muzik dimainkan selepas interaksi pengguna
@@ -136,6 +169,41 @@
             audio.play().catch(error => console.error("Autoplay tidak dibenarkan:", error));
         }
     });
+
+    // Kira jumlah pelawat (rekod sebenar dengan localStorage)
+    let visitCount = localStorage.getItem('visitCount') || 0;
+    if (!sessionStorage.getItem('visited')) {
+        visitCount++;
+        localStorage.setItem('visitCount', visitCount);
+        sessionStorage.setItem('visited', 'true');  // Elak kiraan berganda dalam sesi sama
+    }
+    document.getElementById('total-visitors').innerText = visitCount;
+
+    // Kira pengguna online (guna sessionStorage & localStorage)
+    function updateOnlineUsers(change) {
+        let onlineUsers = Number(localStorage.getItem('onlineUsers') || 0);
+        onlineUsers += change;
+        localStorage.setItem('onlineUsers', onlineUsers);
+        document.getElementById('online-users').innerText = onlineUsers;
+    }
+
+    // Tambah pengguna online bila halaman dibuka
+    if (!sessionStorage.getItem('activeSession')) {
+        sessionStorage.setItem('activeSession', 'true');
+        updateOnlineUsers(1);
+    }
+
+    // Kurangkan pengguna online bila halaman ditutup
+    window.addEventListener('beforeunload', function() {
+        if (sessionStorage.getItem('activeSession')) {
+            updateOnlineUsers(-1);
+            sessionStorage.removeItem('activeSession');
+        }
+    });
+
+    // Dapatkan info peranti
+    let deviceInfo = navigator.userAgent;
+    document.getElementById('device-info').innerText = deviceInfo;
 </script>
 
 </body>
