@@ -120,7 +120,7 @@
 </main>
 <!-- music auto play -->
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 50px;">
-    <div style="background: linear-gradient(135deg, #1e1e1e, #3a3a3a); padding: 30px; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.3); text-align: center; position: relative;">
+    <div class="music-container">
         
         <!-- Bulatan berwarna-warni sebelah kiri -->
         <div class="color-circle left"></div>
@@ -154,18 +154,28 @@
 </script>
 
 <style>
-    /* Gaya untuk CD berputar */
-    .cd-rotate {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: radial-gradient(circle, #ccc 10%, #333 40%, #111 60%, #000 80%);
-        border: 6px solid #ffffff;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        animation: spin 5s linear infinite;
+    /* Kotak hitam yang mengandungi elemen */
+    .music-container {
+        background: #000;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        text-align: center;
+        position: relative;
     }
 
-    /* Animasi pusingan */
+    /* Gaya untuk CD berputar */
+    .cd-rotate {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #eee 10%, #666 40%, #222 60%, #000 80%);
+        border: 6px solid #fff;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+        animation: spin 3s linear infinite;
+    }
+
+    /* Animasi CD berputar */
     @keyframes spin {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -173,24 +183,28 @@
 
     /* Bulatan warna-warni */
     .color-circle {
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        animation: color-change 3s infinite alternate;
+        animation: color-change 5s infinite alternate;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     }
 
+    /* Posisi bulatan */
     .left {
-        left: -50px;
+        left: 20px;
+        animation-delay: 0s;
     }
 
     .right {
-        right: -50px;
+        right: 20px;
+        animation-delay: 2.5s; /* Berbeza dengan yang kiri untuk warna tak serentak */
     }
 
-    /* Animasi perubahan warna */
+    /* Animasi perubahan warna (tidak serentak) */
     @keyframes color-change {
         0% { background: red; }
         25% { background: yellow; }
@@ -199,6 +213,7 @@
         100% { background: purple; }
     }
 </style>
+    
     
 
 </body>
