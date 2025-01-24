@@ -123,17 +123,17 @@
     <source src="https://files.catbox.moe/w9smph.mp3" type="audio/mp3">
 </audio>
 
-<p>
-    <span class="status-icon"></span> 
-    <b>JUMLAH ONLINE:</b> <span id="online-users">0</span>
-</p>
+<div class="stats-container">
+    <p>
+        <span class="status-icon"></span> 
+        <b>JUMLAH ONLINE:</b> <span id="online-users">0</span>
+    </p>
 
-<p>
-    <span class="calendar-icon">📅</span> 
-    <b>JUMLAH PELAWAT:</b> <span id="total-visitors">0</span>
-</p>
-
-<p><b>Peranti Anda:</b> <span id="device-info"></span></p>
+    <p>
+        <span class="visitor-icon"></span> 
+        <b>JUMLAH PELAWAT:</b> <span id="total-visitors">0</span>
+    </p>
+</div>
 
 <footer>
     <p>&copy; 2024 Earl Store. All rights reserved.</p>
@@ -141,23 +141,41 @@
 </footer>
 
 <style>
+    .stats-container {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
     .status-icon {
         display: inline-block;
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
         border-radius: 50%;
         background-color: green;
-        animation: blink 2s infinite ease-in-out;
+        animation: blink-fast 1s infinite ease-in-out;
     }
 
-    .calendar-icon {
-        font-size: 16px;
-        animation: blink 2s infinite ease-in-out;
+    .visitor-icon {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        animation: color-change-fast 0.5s infinite alternate;
     }
 
-    @keyframes blink {
+    @keyframes blink-fast {
         0%, 100% { opacity: 1; }
-        50% { opacity: 0.3; }
+        50% { opacity: 0.1; }
+    }
+
+    @keyframes color-change-fast {
+        0% { background-color: red; }
+        25% { background-color: yellow; }
+        50% { background-color: blue; }
+        75% { background-color: green; }
+        100% { background-color: purple; }
     }
 </style>
 
@@ -200,10 +218,6 @@
             sessionStorage.removeItem('activeSession');
         }
     });
-
-    // Dapatkan info peranti
-    let deviceInfo = navigator.userAgent;
-    document.getElementById('device-info').innerText = deviceInfo;
 </script>
 
 </body>
